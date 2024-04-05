@@ -153,6 +153,17 @@ tasks.configureEach {
     }
 }
 
+tasks.register<Copy>("Twrpfile") {
+    dependsOn("cargoBuild")
+    into("${project.projectDir}/src/main/resources/META-INF/com/google/android")
+    from(rootProject.file("${project.rootDir}/scripts/update_binary.sh")) {
+         rename { "update-binary" }
+    }
+    from(rootProject.file("${project.rootDir}/scripts/flash_script.sh")) {
+         rename { "updater-script" }
+    }
+}
+
 tasks.register<Exec>("cargoClean") {
     executable("cargo")
     args("clean")
